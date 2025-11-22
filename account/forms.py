@@ -3,13 +3,15 @@ from django import forms
 class LoginForm(forms.Form):
     email = forms.EmailField(
         widget = forms.EmailInput(
-            attrs={"class" : "email__input", "placeholeder" : "Электронная почта"}
+            attrs={"type": "email", "id":"email", "name":"email", "placeholder":"Почта"}
         ),
+        label="Почта"
     )
     password = forms.CharField(
         widget = forms.PasswordInput(
-            attrs={"class" : "password__input", "placeholder" : "Пароль"} 
+            attrs={"class": "password__input", "type": "password", "id": "password", "name": "password", "placeholder" :"Пароль"} 
         ),
+        label="Пароль"
     )
 
     def clean(self):
