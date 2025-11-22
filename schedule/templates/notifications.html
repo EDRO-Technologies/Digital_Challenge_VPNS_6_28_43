@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уведомления</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #7950F2; /* Изменен цвет */
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        .header-left h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .nowbar1 {
+            font-weight: 700;
+            margin-left: 50px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .nowbar2 {
+            font-weight: 700;
+            margin-left: 50px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .nowbar3 {
+            font-weight: 700;
+            margin-left: 50px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .nowbar4 {
+            font-weight: 700;
+            margin-left: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            color:#DDDDDD;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: 10px; /* Уменьшен отступ для приближения */
+        }
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #fff; /* Белый круг */
+        }
+        main {
+            padding: 30px 40px;
+            position: relative;
+        }
+        .notifications-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .notifications-section h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .add-notification-btn {
+            background-color: #7950F2;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .add-notification-btn:hover {
+            background-color: #6a45d1;
+        }
+        .notification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .notification-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 5px solid #7950F2; /* Акцентная полоса */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .notification-card.unread {
+            background-color: #f9f9ff; /* Легкий фон для непрочитанных */
+        }
+        .notification-content {
+            flex: 1;
+        }
+        .notification-content h3 {
+            margin: 0 0 10px 0;
+            color: #7950F2;
+            font-size: 18px;
+        }
+        .notification-content p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .notification-time {
+            font-size: 12px;
+            color: #999;
+            margin-top: 10px;
+        }
+        .notification-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-edit {
+            background-color: #7950F2;
+            color: white;
+        }
+        .btn-delete {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .modal-actions {
+            text-align: right;
+        }
+        .modal-actions button {
+            margin-left: 10px;
+        }
+        @media (max-width: 768px) {
+            .notification-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .notification-actions {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Уведомления ваших групп</h1>
+            <div class="nowbar1">Главная</div>
+            <div class="nowbar2">Курсы</div>
+            <div class="nowbar3">Расписание</div>
+            <div class="nowbar4">Уведомления</div>
+        </div>
+        <div class="header-right">
+            <div class="profile">
+                <div class="avatar"></div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="notifications-section">
+            <h2>Уведомления которые вы писали</h2>
+            <button class="add-notification-btn">Добавить уведомление</button>
+            <div class="notification-list">
+                <div class="notification-card unread">
+                    <div class="notification-content">
+                        <h3>Изменение в расписании</h3>
+                        <p>Лекция по Программированию перенесена на 11:00.</p>
+                        <div class="notification-time">2 часа назад</div>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-edit">Редактировать уведомление</button>
+                        <button class="btn btn-delete">Удалить</button>
+                    </div>
+                </div>
+                <div class="notification-card unread">
+                    <div class="notification-content">
+                        <h3>Новое задание</h3>
+                        <p>Добавлено домашнее задание по Алгоритмам. Срок: 5 октября.</p>
+                        <div class="notification-time">5 часов назад</div>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-edit">Редактировать уведомление</button>
+                        <button class="btn btn-delete">Удалить</button>
+                    </div>
+                </div>
+                <div class="notification-card unread">
+                    <div class="notification-content">
+                        <h3>Напоминание</h3>
+                        <p>Завтра в 10:00 семинар по Базам данных.</p>
+                        <div class="notification-time">1 день назад</div>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-edit">Редактировать уведомление</button>
+                        <button class="btn btn-delete">Удалить</button>
+                    </div>
+                </div>
+                <div class="notification-card">
+                    <div class="notification-content">
+                        <h3>Обновление курса</h3>
+                        <p>Курс по Математике обновлен с новыми материалами.</p>
+                        <div class="notification-time">3 дня назад</div>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-edit">Редактировать уведомление</button>
+                        <button class="btn btn-delete">Удалить</button>
+                    </div>
+                </div>
+                <div class="notification-card">
+                    <div class="notification-content">
+                        <h3>Событие</h3>
+                        <p>Хакатон начнется в пятницу в 18:00.</p>
+                        <div class="notification-time">1 неделя назад</div>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-edit">Редактировать уведомление</button>
+                        <button class="btn btn-delete">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальное окно -->
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Добавить уведомление</h2>
+            <form id="notificationForm">
+                <div class="form-group">
+                    <label for="title">Название уведомления:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Описание:</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="time">Время написания:</label>
+                    <input type="text" id="time" name="time" readonly>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn" id="cancelBtn">Отмена</button>
+                    <button type="submit" class="btn" style="background-color: #7950F2; color: white;">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Элементы модального окна
+        const modal = document.getElementById('notificationModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const form = document.getElementById('notificationForm');
+        const titleInput = document.getElementById('title');
+        const descriptionInput = document.getElementById('description');
+        const timeInput = document.getElementById('time');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const closeBtn = document.querySelector('.close');
+
+        // Кнопка добавить уведомление
+        const addNotificationBtn = document.querySelector('.add-notification-btn');
+        addNotificationBtn.addEventListener('click', () => {
+            modalTitle.textContent = 'Добавить уведомление';
+            form.reset();
+            timeInput.value = new Date().toLocaleString('ru-RU');
+            modal.style.display = 'block';
+            form.dataset.editing = 'false';
+        });
+
+        // Кнопки редактировать
+        const editButtons = document.querySelectorAll('.btn-edit');
+        editButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const card = e.target.closest('.notification-card');
+                const title = card.querySelector('h3').textContent;
+                const description = card.querySelector('p').textContent;
+                const time = card.querySelector('.notification-time').textContent;
+
+                modalTitle.textContent = 'Редактировать уведомление';
+                titleInput.value = title;
+                descriptionInput.value = description;
+                timeInput.value = time; // Оставляем время как есть, или можно обновить на текущее
+                modal.style.display = 'block';
+                form.dataset.editing = 'true';
+                form.dataset.card = card;
+            });
+        });
+
+        // Закрытие модального окна
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        cancelBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Сохранение формы
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = titleInput.value;
+            const description = descriptionInput.value;
+            const time = timeInput.value;
+
+            if (form.dataset.editing === 'true') {
+                // Редактирование
+                const card = form.dataset.card;
+                card.querySelector('h3').textContent = title;
+                card.querySelector('p').textContent = description;
+                card.querySelector('.notification-time').textContent = time;
+            } else {
+                // Создание нового
+                const notificationList = document.querySelector('.notification-list');
+                const newCard = document.createElement('div');
+                newCard.className = 'notification-card unread';
+                newCard.innerHTML = `
+                    <div class="notification-content">
+                        <h3>${title}</h3>
+                        <p>${description}</p>
+                        <div class="notification-time">${time}</div>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-edit">Редактировать уведомление</button>
+                        <button class="btn btn-delete">Удалить</button>
+                    </div>
+                `;
+                notificationList.insertBefore(newCard, notificationList.firstChild);
+
+                // Добавить обработчики для новых кнопок
+                newCard.querySelector('.btn-edit').addEventListener('click', (e) => {
+                    const card = e.target.closest('.notification-card');
+                    const title = card.querySelector('h3').textContent;
+                    const description = card.querySelector('p').textContent;
+                    const time = card.querySelector('.notification-time').textContent;
+
+                    modalTitle.textContent = 'Редактировать уведомление';
+                    titleInput.value = title;
+                    descriptionInput.value = description;
+                    timeInput.value = time;
+                    modal.style.display = 'block';
+                    form.dataset.editing = 'true';
+                    form.dataset.card = card;
+                });
+                newCard.querySelector('.btn-delete').addEventListener('click', () => {
+                    newCard.remove();
+                });
+            }
+
+            modal.style.display = 'none';
+        });
+
+        // Удаление уведомлений
+        const deleteButtons = document.querySelectorAll('.btn-delete');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const card = button.closest('.notification-card');
+                card.remove();
+            });
+        });
+    </script>
+</body>
+</html>

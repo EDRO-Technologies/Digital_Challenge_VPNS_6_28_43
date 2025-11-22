@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, UpdateView, DeleteView, ListView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, TemplateView
 from django.urls import reverse_lazy
 from .models import Lessons, Courses
 from account.models import Profile
@@ -40,6 +40,9 @@ class CourseView(ListView):
         context["last_name"] = profile.last_name
         context["surname"] = profile.surname
         return context
+
+class NotificationView(TemplateView):
+    template_name = "notifications.html"
 
 def logout_view(request):
     logout(request)
