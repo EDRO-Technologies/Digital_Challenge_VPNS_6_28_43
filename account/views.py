@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import CreateView, FormView, TemplateView
 from .forms import LoginForm
 from django.urls import reverse_lazy
+from django.contrib.auth import login, logout
 
 # class Zaglushka(TemplateView):
 #     template_name = "authorization.html"
