@@ -1,3 +1,5 @@
 from django.shortcuts import render
+from django.views.generic import CreateView, FormView, TemplateView
 
-# Create your views here.
+class Zaglushka(TemplateView):
+    template_name = "authorization.html"
