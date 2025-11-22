@@ -221,10 +221,11 @@
     <header>
         <div class="header-left">
             <h1>Уведомления ваших групп</h1>
-            <div class="nowbar1">Главная</div>
-            <div class="nowbar2">Курсы</div>
+            <a href="{% url 'main:main' %}" class="nowbar1">Главная</a>
+            <a href="{% url 'schedule:courses_list' %}" class="nowbar2">Курсы</a>
+            <a href="{% url 'main:main' %}" class="nowbar1">Расписание</a>
             <div class="nowbar3">Расписание</div>
-            <div class="nowbar4">Уведомления</div>
+<!--            <div class="nowbar4">Уведомления</div>-->
         </div>
         <div class="header-right">
             <div class="profile">

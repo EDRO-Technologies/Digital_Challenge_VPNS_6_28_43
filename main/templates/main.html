@@ -225,15 +225,18 @@
     <header>
         <div class="header-left">
             <h1>Ваши занятия</h1>
-            <div class="nowbar1">Главная</div>
-             <a href="{% url 'schedule:courses_list' %}" class="nowbar2">Курсы</a>
+              <a href="{% url 'main:main' %}" class="nowbar1">Главная</a>
+              <a href="{% url 'schedule:courses_list' %}" class="nowbar2">Курсы</a>
               <div class="nowbar3">Расписание</div>
-              <div class="nowbar4">Уведомления</div>
+<!--              <div class="nowbar4">Уведомления</div>-->
         </div>
         <div class="header-right">
             {% if role == 'T' %}
                 <a href="{% url 'schedule:create_lesson' %}" class="add-event-btn">Добавить событие</a>
             {% endif %}
+            <div class="notifications">
+                <a href="{% url 'schedule:notifications_list' %}"><img  src="https://img.icons8.com/?size=100&id=LaPTWTgsJCs1&format=png&color=FFFFFF" alt="Уведомления" width="24" height="24"></a>
+            </div>
             <div class="profile">
                 {% if request.user %}
                 <a href="{% url 'account:profile' %}" class="avatar"></a>
