@@ -38,24 +38,29 @@
         font-size:18px;
         cursor:pointer;
         color:#DDDDDD;
+        text-decoration: none;
       }
       .nowbar2{
         font-weight:700;
         margin-left:50px;
         font-size:18px;
         cursor:pointer;
-      }
+        text-decoration: none;
+        color: white;
+    }
       .nowbar3{
         font-weight:700;
         margin-left:50px;
         font-size:18px;
         cursor:pointer;
+        text-decoration: none;
       }
       .nowbar4{
         font-weight:700;
         margin-left:50px;
         font-size:18px;
         cursor:pointer;
+        text-decoration: none;
       }
         .add-event-btn {
             padding: 12px 20px;
@@ -221,7 +226,7 @@
         <div class="header-left">
             <h1>Ваши занятия</h1>
             <div class="nowbar1">Главная</div>
-             <div class="nowbar2">Курсы</div>
+             <a href="{% url 'schedule:courses_list' %}" class="nowbar2">Курсы</a>
               <div class="nowbar3">Расписание</div>
               <div class="nowbar4">Уведомления</div>
         </div>

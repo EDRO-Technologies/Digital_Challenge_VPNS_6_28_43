@@ -8,7 +8,7 @@ class Profile(models.Model):
         TEACHER = "T"
         OTHER = "O"
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    last_name = models.CharField(name="lastname", max_length=75)
+    last_name = models.CharField(name="last_name", max_length=75)
     name = models.CharField(name="name", max_length=75)
     surname = models.CharField(name="surname", max_length=75)
     phone = models.CharField(name="phone", max_length=20)

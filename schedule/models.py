@@ -1,22 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 from account.models import StudentsCourse, Profile
 
-class Course(models.Model):
+class Courses(models.Model):
     title = models.TextField(name="title")
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(name="description")
 
     def __str__(self):
-        return title
+        return self.title
 
 class Lessons(models.Model):
     title = models.TextField(name="title") 
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    date = models.DateTimeField(name="date")
+    date = models.DateTimeField(name="date", default=timezone.now)
     duration = models.CharField(name="duration", max_length=100, blank=True)
     classroom = models.CharField(name="classroom", max_length=15, blank=True)
     flow = models.CharField(name="flow", max_length=150, blank=True)
+    comment = models.TextField(name="comment", blank=True)
 
 class Notifications_lessons(models.Model):
     title = models.CharField(name="title", max_length=255)
@@ -25,7 +27,7 @@ class Notifications_lessons(models.Model):
 
 class Notifications_courses(models.Model):
     title = models.CharField(name="title", max_length=255)
-    course_title = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+    course_title = models.ForeignKey(Courses, on_delete=models.SET_NULL, null=True)
     description = models.TextField(name="notification description")
 
 class StudyGroup(models.Model):

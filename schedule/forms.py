@@ -20,3 +20,24 @@ class CreateLesson(forms.ModelForm):
             "classroom": "Аудитория",
             "flow": "Группа"
         }
+
+class RedactLesson(forms.ModelForm):
+    class Meta:
+        model = Lessons
+        fields = ["title", 'date', 'duration', 'classroom', "flow", "comment"]
+        widgets = {
+            "title": forms.TextInput(attrs={"class": "location__input"}),
+            "date": forms.DateTimeInput(attrs={'type': 'datetime-local', "class": "location__input"}),
+            "duration": forms.TextInput(attrs={"class": "location__input"}),
+            "classroom": forms.TextInput(attrs={"class": "location__input"}),
+            "flow": forms.TextInput(attrs={"class": "location__input"}),
+            "comment": forms.Textarea()
+        }
+        labels = {
+            "title": "Название",
+            "date": "Дата и время проведения",
+            "duration": "Длительность",
+            "classroom": "Аудитория",
+            "flow": "Группа",
+            "comment": "Комментарий",
+        }
