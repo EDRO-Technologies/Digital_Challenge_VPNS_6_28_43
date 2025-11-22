@@ -1,13 +1,30 @@
-<!doctype html>
-<html lang="en">
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+    <title>Вход в университет</title>
 </head>
 <body>
-<p>authorization</p>
+    <div class="container">
+        <div class="left-panel">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/university.png" alt="Иконка университета" class="icon">
+            <h1>С возвращением в университет</h1>
+            <form>
+                <div class="form-group">
+                    <label for="email">Почта</label>
+                    <input type="email" id="email" name="email" placeholder="Ваша почта..." required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" placeholder="Ваш пароль..." required>
+                </div>
+                <button type="submit" class="btn">Войти</button>
+            </form>
+        </div>
+        <div class="right-panel"></div>
+    </div>
 </body>
 </html>
