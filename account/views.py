@@ -1,14 +1,10 @@
-from django.shortcuts import render
-from django.views.generic import CreateView, FormView, TemplateView
+from django.shortcuts import render, redirect
+from django.views.generic import CreateView, FormView, TemplateView, DetailView
 from .forms import LoginForm
 from django.urls import reverse_lazy
 from django.contrib.auth import login, logout
-
-# class Zaglushka(TemplateView):
-#     template_name = "authorization.html"
-    
-# class Zaglushka2(TemplateView):
-#     template_name = "profile.html"
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Profile
 
 class UserSignInView(FormView):
     template_name = "authorization.html"
@@ -28,3 +24,18 @@ class UserSignInView(FormView):
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = "profile.html"
+    login_url = "account:auth"
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        profile = Profile.objects.get(user=user)
+
+        # context[""] = 
+        

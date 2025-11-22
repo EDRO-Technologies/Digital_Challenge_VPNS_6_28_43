@@ -5,6 +5,6 @@ app_name = "account"
 
 urlpatterns = [
     path("auth/", UserSignInView.as_view(), name="auth"),
-    # path("profile/", Zaglushka2.as_view(), name="profile")
+    path("profile/", ProfileView.as_view(), name="profile")
 
 ]

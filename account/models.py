@@ -15,7 +15,7 @@ class Profile(models.Model):
     role = models.CharField(name="role", choices=Roles, default=Roles.STUDENT)
 
     def __str__(self):
-        return self.email
+        return self.name
 
 class StudentsCourse(models.Model):
     title = models.CharField(name="student course title", max_length=30)
