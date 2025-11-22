@@ -5,11 +5,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/profile.css'%}" />
+    <link rel="stylesheet" href="profile.css" />
     <title>Профиль пользователя</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #e4e8eb);
+            color: #333333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: auto;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            background: #7950F2;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 74, 90, 0.4);
+        }
+
+        .back-btn::before {
+            content: '←';
+            font-size: 1.2rem;
+        }
+
+        .profile-container {
+            width: 576px;
+            height: auto;
+            background: linear-gradient(135deg, #ffffff, #f0f2f5);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #333333;
+            overflow: hidden;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            color: #333333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .edit-btn {
+            padding: 8px 16px;
+            background: #7950F2;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(217, 0, 255, 0.4);
+        }
+
+        .info-section {
+            margin-bottom: 15px;
+        }
+
+        .info-section h2 {
+            font-size: 1.3rem;
+            color: #333333;
+            margin-bottom: 8px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #d0d0d0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #666666;
+        }
+
+        .info-value {
+            color: #333333;
+        }
+
+        .subjects-section h2 {
+            font-size: 1.3rem;
+            color: #333333;
+            margin-bottom: 8px;
+        }
+
+        .subjects-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .subject-item {
+            background: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #333333;
+            transition: background 0.3s ease;
+        }
+
+        .subject-item:hover {
+            background: #d0d0d0;
+        }
+
+        .logout-btn {
+            margin-top: 30px; /* Увеличен отступ сверху */
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #ff4d4d, #ff6666);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: center;
+            box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 77, 77, 0.5);
+            background: linear-gradient(135deg, #ff6666, #ff4d4d);
+        }
+
+        @media (max-width: 1024px) {
+            .profile-container {
+                width: 90%;
+                height: auto;
+                max-height: 90vh;
+            }
+        }
+    </style>
 </head>
 <body>
-    <button class="back-btn">Назад</button>
+    <a href="{% url 'main:main' %}" class="back-btn">Назад</a>
     <div class="profile-container">
         <div class="profile-header">
             <div class="profile-photo">
@@ -24,15 +223,20 @@
             <h2>Информация о пользователе</h2>
             <div class="info-item">
                 <span class="info-label">Почта:</span>
-                <span class="info-value">{{  }}</span>
+                <span class="info-value">{{ user.email }}</span>
             </div>
             <div class="info-item">
                 <span class="info-label">Номер телефона:</span>
-                <span class="info-value">+7 (999) 123-45-67</span>
+                <span class="info-value">{{ phone }}</span>
             </div>
             <div class="info-item">
+                {% if role == 'ST' %}
                 <span class="info-label">Группа студента:</span>
-                <span class="info-value">607-51</span>
+                <span class="info-value">{{ group }}</span>
+                {% else %}
+                <span class="info-label">Группы преподавателя:</span>
+                <span class="info-value">{{ group }}</span>
+                {% endif %}
             </div>
         </div>
         <div class="subjects-section">
@@ -46,6 +250,7 @@
                 <div class="subject-item">Базы данных</div>
             </div>
         </div>
+        <a href="{% url 'account:logout' %}" class="logout-btn">Выйти из аккаунта</a>
     </div>
 </body>
 </html>

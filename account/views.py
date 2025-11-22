@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, FormView, TemplateView, DetailView
+from django.views.generic import FormView, TemplateView
 from .forms import LoginForm
 from django.urls import reverse_lazy
 from django.contrib.auth import login, logout
@@ -36,6 +36,11 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         user = self.request.user
         profile = Profile.objects.get(user=user)
+        context["role"] = profile.role
+        context["phone"] = profile.phone
+        context["group"] = profile.group
+        return context
 
-        # context[""] = 
-        
+def logout_view(request):
+    logout(request)
+    return redirect("account:auth")

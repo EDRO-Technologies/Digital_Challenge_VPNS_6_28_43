@@ -8,10 +8,11 @@ class Profile(models.Model):
         TEACHER = "T"
         OTHER = "O"
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    last_name = models.CharField(name="last name", max_length=75)
+    last_name = models.CharField(name="lastname", max_length=75)
     name = models.CharField(name="name", max_length=75)
     surname = models.CharField(name="surname", max_length=75)
     phone = models.CharField(name="phone", max_length=20)
+    group = models.CharField(name="group", max_length=15, null=True)
     role = models.CharField(name="role", choices=Roles, default=Roles.STUDENT)
 
     def __str__(self):
