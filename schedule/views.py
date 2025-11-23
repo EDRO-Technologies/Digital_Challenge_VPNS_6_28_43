@@ -56,20 +56,20 @@ class LessonUpdateView(UpdateView):
 
         user_email = 'hooloit147@gmail.com'
 
-        # send_mail(
-        #     f"""{comment}{title}{owner}{date}{duration}{classroom}{flow}""",
-        #     f"""{comment}
-        #                 {title}
-        #                 {owner}
-        #                 {date}
-        #                 {duration}
-        #                 {classroom}
-        #                 {flow}
-        #                 """,
-        #     'hooloit147@list.ru',
-        #     [user_email],
-        #     fail_silently=False,
-        # )
+        send_mail(
+            f"""{comment}{title}{owner}{date}{duration}{classroom}{flow}""",
+            f"""{comment}
+                        {title}
+                        {owner}
+                        {date}
+                        {duration}
+                        {classroom}
+                        {flow}
+                        """,
+            'hooloit147@list.ru',
+            [user_email],
+            fail_silently=False,
+        )
 
         lesson.save()
         
