@@ -16,6 +16,15 @@ from .credentials import *
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = "static/"
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 465  # Используем порт 465 с SSL
+EMAIL_USE_SSL = True  # Для порта 465 используем SSL
+EMAIL_HOST_USER = 'hooloit147@list.ru'  # ваш email Mail.ru
+EMAIL_HOST_PASSWORD = 'naSzy1KgLXGh26x1dYyj'  # пароль приложения
+DEFAULT_FROM_EMAIL = 'hooloit147@gmail.com'  # email отправителя
+# SERVER_EMAIL = 'your_email@mail.ru'  # для ошибок админки
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
