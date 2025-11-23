@@ -21,7 +21,7 @@ EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 465  # Используем порт 465 с SSL
 EMAIL_USE_SSL = True  # Для порта 465 используем SSL
 EMAIL_HOST_USER = 'hooloit147@list.ru'  # ваш email Mail.ru
-EMAIL_HOST_PASSWORD = 'naSzy1KgLXGh26x1dYyj'  # пароль приложения
+EMAIL_HOST_PASSWORD = passmail  # пароль приложения
 DEFAULT_FROM_EMAIL = 'hooloit147@gmail.com'  # email отправителя
 # SERVER_EMAIL = 'your_email@mail.ru'  # для ошибок админки
 
@@ -40,6 +40,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
     'account',
     'main',
     'schedule',
+    'restapi'
 ]
 
 MIDDLEWARE = [
