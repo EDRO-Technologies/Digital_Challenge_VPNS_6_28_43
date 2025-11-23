@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from account.models import StudentsCourse, Profile
+from account.models import Profile, StudentsCourse
 
 class Courses(models.Model):
     title = models.TextField(name="title")
@@ -37,4 +37,3 @@ class StudyGroup(models.Model):
     participants = models.ManyToManyField(StudentsCourse)
     lessons = models.ForeignKey(Lessons, on_delete=models.CASCADE, name="lessons")
 
-    

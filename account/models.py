@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-
 class Profile(models.Model):
     class Roles(models.TextChoices):
         STUDENT = "ST"
@@ -18,10 +17,17 @@ class Profile(models.Model):
     def __str__(self):
         return self.name
 
+class Subjects(models.Model):
+    title = models.CharField(name="title", max_length=150)
+
+    def __str__(self):
+        return self.title
+
 class StudentsCourse(models.Model):
-    title = models.CharField(name="student course title", max_length=30)
-    participants = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    institute = models.CharField(name="institute", max_length=5)
+    title = models.CharField(name="title", max_length=30)
+    participants = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    subjects = models.ForeignKey(Subjects, on_delete=models.CASCADE, null=True)
+    institute = models.CharField(name="institute", max_length=10)
 
     def __str__(self):
         return self.title

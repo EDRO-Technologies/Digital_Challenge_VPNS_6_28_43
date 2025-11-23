@@ -22,8 +22,14 @@ class LessonUpdateView(UpdateView):
     context_object_name = "lesson"
     success_url = reverse_lazy('main:main')
 
-# class LessonDeleteView(DeleteView):
-#     model = Lessons
+class LessonDeleteView(DeleteView):
+    model = Lessons
+    template_name = "delete_lesson.html"
+    success_url = reverse_lazy('main:main')
+    context_object_name = "lesson"
+
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
     
 class CourseCreateView(CreateView):
     pass
