@@ -81,7 +81,14 @@ class LessonDeleteView(DeleteView):
     success_url = reverse_lazy("main:main")
 
 class CourseCreateView(CreateView):
-    pass
+    model = Courses
+    template_name = "create_course.html"
+    form_class = CreateCourse
+    success_url = reverse_lazy("schedule:create_course")
+
+    def form_valid(self, form):
+        form.instance.owner = Profile.objects.get(user=self.request.user)
+        return super().form_valid(form)
 
 class CourseView(ListView):
     template_name = "courses.html"
