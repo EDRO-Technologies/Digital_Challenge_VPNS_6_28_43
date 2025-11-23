@@ -75,9 +75,11 @@ class LessonUpdateView(UpdateView):
         
         return super().form_valid(form)
 
-# class LessonDeleteView(DeleteView):
-#     model = Lessons
-    
+class LessonDeleteView(DeleteView):
+    model = Lessons
+    template_name = "delete_lesson.html"
+    success_url = reverse_lazy("main:main")
+
 class CourseCreateView(CreateView):
     pass
 
