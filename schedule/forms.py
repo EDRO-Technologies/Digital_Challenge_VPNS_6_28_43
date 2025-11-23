@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lessons
+from .models import Lessons, Courses
 from datetime import timedelta
 
 class CreateLesson(forms.ModelForm):
@@ -40,4 +40,17 @@ class RedactLesson(forms.ModelForm):
             "classroom": "Аудитория",
             "flow": "Группа",
             "comment": "Комментарий",
+        }
+
+class CreateCourse(forms.ModelForm):
+    class Meta:
+        model = Courses
+        fields = ["title", "description"]
+        widgets = {
+            "title": forms.TextInput(attrs={"class": "location__input"}),
+            "description": forms.Textarea(attrs={"class": "location__input"}),
+        }
+        labels = {
+            "title": "Название курса",
+            "description": "Описание курса"
         }

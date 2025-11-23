@@ -5,7 +5,7 @@ from account.models import Profile, StudentsCourse
 
 class Courses(models.Model):
     title = models.TextField(name="title")
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
     description = models.TextField(name="description")
 
     def __str__(self):
