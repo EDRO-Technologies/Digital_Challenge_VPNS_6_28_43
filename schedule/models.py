@@ -20,6 +20,9 @@ class Lessons(models.Model):
     flow = models.CharField(name="flow", max_length=150, blank=True)
     comment = models.TextField(name="comment", blank=True)
 
+    def get_day_of_week(self):
+        return self.date.strftime('%A')
+
 class Notifications_lessons(models.Model):
     title = models.CharField(name="title", max_length=255)
     lesson_title = models.ForeignKey(Lessons, on_delete=models.SET_NULL, null=True)

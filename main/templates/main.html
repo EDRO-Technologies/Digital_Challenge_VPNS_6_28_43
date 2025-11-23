@@ -247,127 +247,30 @@
         <section class="calendar">
             <h2>Календарь на неделю</h2>
             <div class="week">
-                <div class="day active" data-day="mon">
-                    <h3>Пн</h3>
-                    <p>1 окт</p>
+                {% for day in date %}
+                <div class="day" data-day="{{ day.date_str }}">
+                    <h3>{{ day.day }}</h3>
+                    <p>{{ day.date }}</p>
                 </div>
-                <div class="day" data-day="tue">
-                    <h3>Вт</h3>
-                    <p>2 окт</p>
-                </div>
-                <div class="day" data-day="wed">
-                    <h3>Ср</h3>
-                    <p>3 окт</p>
-                </div>
-                <div class="day" data-day="thu">
-                    <h3>Чт</h3>
-                    <p>4 окт</p>
-                </div>
-                <div class="day" data-day="fri">
-                    <h3>Пт</h3>
-                    <p>5 окт</p>
-                </div>
-                <div class="day" data-day="sat">
-                    <h3>Сб</h3>
-                    <p>6 окт</p>
-                </div>
-                <div class="day" data-day="sun">
-                    <h3>Вс</h3>
-                    <p>7 окт</p>
-                </div>
+                {% endfor %}
             </div>
         </section>
         <section class="subjects">
-            <!-- Понедельник -->
-            <div class="subject-card show" data-days="mon">
-                <h3>Программирование</h3>
-                <p><strong>Время:</strong> 10:00 - 12:00</p>
-                <p><strong>Продолжительность:</strong> 2 часа</p>
-                <p><strong>Преподаватель:</strong> Иванов И.И.</p>
-                <p><strong>Аудитория:</strong> 101</p>
-                <p><strong>Направление:</strong> 607-51</p>
-                <button class="edit-lesson-btn">Редактировать</button>
+             {% for lesson in lessons %}
+            <div class="subject-card show" data-days="{{ lesson.year }}">
+                <h3>{{ lesson.title }}</h3>
+                <p><strong>Продолжительность:</strong> {{ lesson.duration }} </p>
+                <p><strong>Преподаватель:</strong> </p>
+                <p><strong>Аудитория:</strong> {{ lesson.classroom }} </p>
+                <p><strong>Направление:</strong> {{ lesson.flow }}</p>
+                {% if lesson.comment != "" %}
+                <p><strong>Комментарий преподавателя:</strong> {{ lesson.comment }}</p>
+                {% endif %}
+                {% if role == 'T' %}
+                <a href="{% url 'schedule:update_lesson' lesson.id %}" class="edit-lesson-btn">Редактировать</a>
+                {% endif %}
             </div>
-            <div class="subject-card show" data-days="mon">
-                <h3>Алгоритмы</h3>
-                <p><strong>Время:</strong> 14:00 - 16:00</p>
-                <p><strong>Продолжительность:</strong> 2 часа</p>
-                <p><strong>Преподаватель:</strong> Петрова А.С.</p>
-                <p><strong>Аудитория:</strong> 205</p>
-                <p><strong>Направление:</strong> 607-52</p>
-                <button class="edit-lesson-btn">Редактировать</button>
-            </div>
-
-            <!-- Вторник -->
-            <div class="subject-card" data-days="tue">
-                <h3>Математика</h3>
-                <p><strong>Время:</strong> 09:00 - 10:30</p>
-                <p><strong>Продолжительность:</strong> 1.5 часа</p>
-                <p><strong>Преподаватель:</strong> Сидоров В.В.</p>
-                <p><strong>Аудитория:</strong> 102</p>
-                <p><strong>Направление:</strong> 607-52</p>
-                <button class="edit-lesson-btn">Редактировать</button>
-            </div>
-            <div class="subject-card" data-days="tue">
-                <h3>Физика</h3>
-                <p><strong>Время:</strong> 11:00 - 14:00</p>
-                <p><strong>Продолжительность:</strong> 3 часа</p>
-                <p><strong>Преподаватель:</strong> Кузнецова М.М.</p>
-                <p><strong>Аудитория:</strong> Лаб 3</p>
-                <p><strong>Направление:</strong> 607-52</p>
-                <button class="edit-lesson-btn">Редактировать</button>
-            </div>
-
-            <!-- Среда -->
-            <div class="subject-card" data-days="wed">
-                <h3>Базы данных</h3>
-                <p><strong>Время:</strong> 10:00 - 12:00</p>
-                <p><strong>Продолжительность:</strong> 2 часа</p>
-                <p><strong>Преподаватель:</strong> Иванов И.И.</p>
-                <p><strong>Аудитория:</strong> 101</p>
-                <p><strong>Направление:</strong> 607-52</p>
-                <button class="edit-lesson-btn">Редактировать</button>
-            </div>
-
-            <!-- Четверг -->
-            <div class="subject-card" data-days="thu">
-                <h3>Сети</h3>
-                <p><strong>Время:</strong> 13:00 - 15:00</p>
-                <p><strong>Продолжительность:</strong> 2 часа</p>
-                <p><strong>Преподаватель:</strong> Петрова А.С.</p>
-                <p><strong>Аудитория:</strong> 205</p>
-                <p><strong>Направление:</strong> И607-52</p>
-                <button class="edit-lesson-btn">Редактировать</button>
-            </div>
-
-            <!-- Пятница -->
-            <div class="subject-card" data-days="fri">
-                <h3>Хакатон</h3>
-                <p><strong>Время:</strong> 18:00 - 18:00 (следующий день)</p>
-                <p><strong>Продолжительность:</strong> 24 часа</p>
-                <p><strong>Ведущий:</strong> Команда организаторов</p>
-                <p><strong>Площадка:</strong> Главный зал</p>
-                <p><strong>Направление:</strong> 607-52</p>
-                <button class="edit-lesson-btn">Редактировать</button>
-            </div>
-
-            <!-- Суббота -->
-            <div class="subject-card" data-days="sat">
-                <h3>Интенсив по Python</h3>
-                <p><strong>Время:</strong> 10:00 - 16:00</p>
-                <p><strong>Продолжительность:</strong> 6 часов</p>
-                <p><strong>Преподаватель:</strong> Сидоров В.В.</p>
-                <p><strong>Аудитория:</strong> Лаб 1</p>
-                <p><strong>Направление:</strong> 607-52</p>
-                <button class="edit-lesson-btn">Редактировать</button>
-            </div>
-
-            <!-- Воскресенье -->
-            <div class="subject-card" data-days="sun">
-                <h3>Отдых</h3>
-                <p>Нет занятий</p>
-                <button class="edit-lesson-btn">Редактировать</button>
-            </div>
+            {% endfor %}
         </section>
     </main>
 

@@ -43,7 +43,7 @@ class CourseView(ListView):
 
 class NotificationView(TemplateView):
     template_name = "notifications.html"
-
+    
 def logout_view(request):
     logout(request)
     return redirect("account:auth")
