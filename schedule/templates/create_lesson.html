@@ -158,9 +158,9 @@
         <div class="header-left">
             <h1>Расписание</h1>
             <a href="{% url 'main:main' %}" class="nowbar1">Главная</a>
-            <div class="nowbar2">Курсы</div>
-            <div class="nowbar3">Расписание</div>
-            <div class="nowbar4">Уведомления</div>
+            <a href="{% url 'schedule:courses_list' %}" class="nowbar2">Курсы</a>
+            <a href="{% url 'main:main' %}" class="nowbar1">Расписание</a>
+<!--            <div class="nowbar4">Уведомления</div>-->
         </div>
         <div class="header-right">
             <div class="profile">
