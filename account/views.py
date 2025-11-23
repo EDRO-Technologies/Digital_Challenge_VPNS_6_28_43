@@ -39,6 +39,9 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context["role"] = profile.role
         context["phone"] = profile.phone
         context["group"] = profile.group
+        context["name"] = profile.name
+        context["surname"] = profile.surname
+        context["last_name"] = profile.last_name
         return context
 
 def logout_view(request):
