@@ -1,9 +1,25 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, TemplateView
 from django.urls import reverse_lazy
+from django.core.mail import send_mail
+from django.http import HttpResponse
 from .models import Lessons, Courses
 from account.models import Profile
 from .forms import *
+
+def send_notification_view(request):
+    # Получаем данные из запроса или из других источников
+    user_email = 'ilya.surgutskij11@gmail.com'
+
+    send_mail(
+        'Важное уведомление',
+        'Здравствуйте! У вас новое уведомление на сайте.',
+        'hooloit147@list.ru',
+        [user_email],
+        fail_silently=False,
+    )
+
+    return HttpResponse('Уведомление отправлено!')
 
 class LessonCreateView(CreateView):
     model = Lessons
@@ -21,6 +37,43 @@ class LessonUpdateView(UpdateView):
     template_name = "redact_lesson.html"
     context_object_name = "lesson"
     success_url = reverse_lazy('main:main')
+
+    def form_valid(self, form):
+        lesson = form.save(commit=False)
+
+        title = form.cleaned_data.get('title')
+        owner = form.cleaned_data.get('owner')
+        date = form.cleaned_data.get('date')
+        duration = form.cleaned_data.get('duration')
+        classroom = form.cleaned_data.get('classroom')
+        flow = form.cleaned_data.get('flow')
+        comment = form.cleaned_data.get('comment')
+
+        print(title,owner,date,duration,classroom,flow,comment)
+        print("\n",f"Заголовок: {title}")
+        print(f"Описание: {comment}")
+        print(f"Дата: {date}")
+
+        user_email = 'hooloit147@gmail.com'
+
+        # send_mail(
+        #     f"""{comment}{title}{owner}{date}{duration}{classroom}{flow}""",
+        #     f"""{comment}
+        #                 {title}
+        #                 {owner}
+        #                 {date}
+        #                 {duration}
+        #                 {classroom}
+        #                 {flow}
+        #                 """,
+        #     'hooloit147@list.ru',
+        #     [user_email],
+        #     fail_silently=False,
+        # )
+
+        lesson.save()
+        
+        return super().form_valid(form)
 
 # class LessonDeleteView(DeleteView):
 #     model = Lessons
