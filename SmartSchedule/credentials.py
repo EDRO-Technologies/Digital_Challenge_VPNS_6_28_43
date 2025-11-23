@@ -1,5 +1,0 @@
-host = "91.143.50.13"
-port = "5432"
-user = "BaseConnect"
-name = "PostgresServer"
-password = "#R$ESDRFD%TG^Y&HU*Jgyuf7ht6f"
