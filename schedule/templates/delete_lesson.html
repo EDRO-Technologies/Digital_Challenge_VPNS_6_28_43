@@ -1,15 +1,18 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/create_lesson.css' %}"/>
     <title>Подтверждение</title>
 </head>
 <body>
-    <form method="POST">
-        {% csrf_token %}
-        <p>Вы уверены, что хотите удалить {{ lesson.title }}?</p>
-        <button type="submit">Удалить</button>
-    </form>
+<form method="POST">
+    {% csrf_token %}
+    <p>Вы уверены, что хотите удалить {{ lesson.title }}?</p>
+    <button type="submit">Удалить</button>
+</form>
 </body>
 </html>

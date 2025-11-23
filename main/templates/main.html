@@ -1,330 +1,98 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Умное расписание курсов</title>
-    <style>
-        a {
-            text-decoration: none;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background-color: #7950F2; /* Изменен цвет */
-            color: white;
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header-left {
-            display: flex;
-            align-items: center;
-        }
-        .header-left h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-        }
-      .nowbar1{
-        font-weight:700;
-        margin-left:50px;
-        font-size:18px;
-        cursor:pointer;
-        color:#DDDDDD;
-        text-decoration: none;
-      }
-      .nowbar2{
-        font-weight:700;
-        margin-left:50px;
-        font-size:18px;
-        cursor:pointer;
-        text-decoration: none;
-        color: white;
-    }
-      .nowbar3{
-        font-weight:700;
-        margin-left:50px;
-        font-size:18px;
-        cursor:pointer;
-        text-decoration: none;
-      }
-      .nowbar4{
-        font-weight:700;
-        margin-left:50px;
-        font-size:18px;
-        cursor:pointer;
-        text-decoration: none;
-      }
-        .add-event-btn {
-            padding: 12px 20px;
-            background: #ffffff;
-            color: #7950F2;
-            border: 2px solid #7950F2;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-right: 20px;
-            box-shadow: 0 4px 10px rgba(121, 80, 242, 0.2);
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-        }
-        .add-event-btn::before {
-            content: '+';
-            font-size: 1.2rem;
-            margin-right: 8px;
-        }
-        .add-event-btn:hover {
-            background: #7950F2;
-            color: #ffffff;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(121, 80, 242, 0.4);
-        }
-        .add-event-btn:active {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(121, 80, 242, 0.3);
-        }
-        .profile {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            margin-left: 10px; /* Уменьшен отступ для приближения */
-        }
-        .avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #fff; /* Белый круг */
-        }
-        main {
-            padding: 30px 40px;
-            position: relative;
-        }
-        .calendar {
-            background-color: white;
-            border-radius: 8px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .calendar h2 {
-            margin-top: 0;
-            font-size: 24px;
-        }
-        .week {
-            display: flex;
-            justify-content: space-between;
-        }
-        .day {
-            flex: 1;
-            text-align: center;
-            padding: 20px;
-            border-right: 1px solid #ddd;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .day:hover {
-            background-color: #f0f0f0;
-        }
-        .day.active {
-            background-color: #7950F2; /* Изменен цвет */
-            color: white;
-            border-radius: 8px; /* Закругление для активного дня */
-        }
-        .day:last-child {
-            border-right: none;
-        }
-        .day h3 {
-            margin: 0;
-            font-size: 20px;
-        }
-        .day p {
-            margin: 5px 0 0 0;
-            font-size: 16px;
-        }
-        .subjects {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-        .subject-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            flex: 1 1 calc(33% - 30px);
-            min-width: 300px;
-            display: none; /* Скрыты по умолчанию */
-        }
-        .subject-card.show {
-            display: block;
-        }
-        .subject-card h3 {
-            margin-top: 0;
-            color: #7950F2; /* Изменен цвет */
-            font-size: 20px;
-        }
-        .subject-card p {
-            margin: 8px 0;
-            font-size: 16px;
-        }
-        .edit-lesson-btn {
-            padding: 8px 12px;
-            background: #7950F2;
-            color: #ffffff;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        .edit-lesson-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(121, 80, 242, 0.4);
-        }
-        
-        .delete-lesson-btn {
-            padding: 8px 12px;
-            background: red;
-            color: #ffffff;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        .delete-lesson-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(121, 80, 242, 0.4);
-        }
-
-        @media (max-width: 1920px) {
-            /* Адаптация для экрана 1920x1080 */
-            body {
-                font-size: 16px;
-            }
-            .subjects {
-                justify-content: space-around;
-            }
-        }
-        @media (max-width: 768px) {
-            .week {
-                flex-direction: column;
-            }
-            .day {
-                border-right: none;
-                border-bottom: 1px solid #ddd;
-            }
-            .day:last-child {
-                border-bottom: none;
-            }
-            .subjects {
-                flex-direction: column;
-            }
-            .subject-card {
-                flex: 1;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <h1>Ваши занятия</h1>
-              <a href="{% url 'main:main' %}" class="nowbar1">Главная</a>
-              <a href="{% url 'schedule:courses_list' %}" class="nowbar2">Курсы</a>
-              <div class="nowbar3">Расписание</div>
-<!--              <div class="nowbar4">Уведомления</div>-->
+<header>
+    <div class="header-left">
+        <h1>Ваши занятия</h1>
+        <a href="{% url 'main:main' %}" class="nowbar1">Главная</a>
+        <a href="{% url 'schedule:courses_list' %}" class="nowbar2">Курсы</a>
+        <div class="nowbar3">Расписание</div>
+    </div>
+    <div class="header-right">
+        {% if role == 'T' %}
+        <a href="{% url 'schedule:create_lesson' %}" class="add-event-btn">Добавить событие</a>
+        {% endif %}
+        <div class="notifications">
+            <a href="{% url 'schedule:notifications_list' %}"><img
+                    src="https://img.icons8.com/?size=100&id=LaPTWTgsJCs1&format=png&color=FFFFFF" alt="Уведомления"
+                    width="24" height="24"></a>
         </div>
-        <div class="header-right">
-            {% if role == 'T' %}
-                <a href="{% url 'schedule:create_lesson' %}" class="add-event-btn">Добавить событие</a>
+        <div class="profile">
+            {% if request.user %}
+            <a href="{% url 'account:profile' %}" class="avatar"></a>
+            {% else %}
+            <a href="{% url 'account:auth' %}">Авторизоваться</a>
             {% endif %}
-            <div class="notifications">
-                <a href="{% url 'schedule:notifications_list' %}"><img  src="https://img.icons8.com/?size=100&id=LaPTWTgsJCs1&format=png&color=FFFFFF" alt="Уведомления" width="24" height="24"></a>
-            </div>
-            <div class="profile">
-                {% if request.user %}
-                <a href="{% url 'account:profile' %}" class="avatar"></a>
-                {% else %}
-                <a href="{% url 'account:auth' %}">Авторизоваться</a>
-                {% endif %}
-            </div>
         </div>
-    </header>
-    <main>
-        <section class="calendar">
-            <h2>Календарь на неделю</h2>
-            <div class="week">
-                {% for day in date %}
-                <div class="day" data-day="{{ day.date_str }}">
-                    <h3>{{ day.day }}</h3>
-                    <p>{{ day.date }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </section>
-        <section class="subjects">
-             {% for lesson in lessons %}
-            <div class="subject-card show" data-days="{{ lesson.year }}">
-                <h3>{{ lesson.title }}</h3>
-                <p><strong>Продолжительность:</strong> {{ lesson.duration }} </p>
-                <p><strong>Преподаватель:</strong> </p>
-                <p><strong>Аудитория:</strong> {{ lesson.classroom }} </p>
-                <p><strong>Направление:</strong> {{ lesson.flow }}</p>
-                {% if lesson.comment != "" %}
-                <p><strong>Комментарий преподавателя:</strong> {{ lesson.comment }}</p>
-                {% endif %}
-                {% if role == 'T' %}
-                <a href="{% url 'schedule:update_lesson' lesson.id %}" class="edit-lesson-btn">Редактировать</a>
-                <a href="{% url 'schedule:delete_lesson' lesson.id %}" class="delete-lesson-btn">Удалить</a>
-                {% endif %}
+    </div>
+</header>
+<main>
+    <section class="calendar">
+        <h2>Календарь на неделю</h2>
+        <div class="week">
+            {% for day in date %}
+            <div class="day" data-day="{{ day.date_str }}">
+                <h3>{{ day.day }}</h3>
+                <p>{{ day.date }}</p>
             </div>
             {% endfor %}
-        </section>
-    </main>
+        </div>
+    </section>
+    <section class="subjects">
+        {% for lesson in lessons %}
+        <div class="subject-card show" data-days="{{ lesson.year }}">
+            <h3>{{ lesson.title }}</h3>
+            <p><strong>Продолжительность:</strong> {{ lesson.duration }} </p>
+            <p><strong>Преподаватель:</strong></p>
+            <p><strong>Аудитория:</strong> {{ lesson.classroom }} </p>
+            <p><strong>Направление:</strong> {{ lesson.flow }}</p>
+            {% if lesson.comment != "" %}
+            <p><strong>Комментарий преподавателя:</strong> {{ lesson.comment }}</p>
+            {% endif %}
+            {% if role == 'T' %}
+            <a href="{% url 'schedule:update_lesson' lesson.id %}" class="edit-lesson-btn">Редактировать</a>
+            <a href="{% url 'schedule:delete_lesson' lesson.id %}" class="delete-lesson-btn">Удалить</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </section>
+</main>
 
-    <script>
-        const days = document.querySelectorAll('.day');
-        const subjectCards = document.querySelectorAll('.subject-card');
+<script>
+    const days = document.querySelectorAll('.day');
+    const subjectCards = document.querySelectorAll('.subject-card');
 
-        days.forEach(day => {
-            day.addEventListener('click', () => {
-                // Убрать активный класс со всех дней
-                days.forEach(d => d.classList.remove('active'));
-                // Добавить активный класс к выбранному дню
-                day.classList.add('active');
+    days.forEach(day => {
+        day.addEventListener('click', () => {
+            // Убрать активный класс со всех дней
+            days.forEach(d => d.classList.remove('active'));
+            // Добавить активный класс к выбранному дню
+            day.classList.add('active');
 
-                const selectedDay = day.getAttribute('data-day');
+            const selectedDay = day.getAttribute('data-day');
 
-                // Скрыть все карточки
-                subjectCards.forEach(card => {
-                    card.classList.remove('show');
-                });
+            // Скрыть все карточки
+            subjectCards.forEach(card => {
+                card.classList.remove('show');
+            });
 
-                // Показать карточки для выбранного дня
-                subjectCards.forEach(card => {
-                    if (card.getAttribute('data-days') === selectedDay) {
-                        card.classList.add('show');
-                    }
-                });
+            // Показать карточки для выбранного дня
+            subjectCards.forEach(card => {
+                if (card.getAttribute('data-days') === selectedDay) {
+                    card.classList.add('show');
+                }
             });
         });
-    </script>
+    });
+</script>
 </body>
 
 </html>
